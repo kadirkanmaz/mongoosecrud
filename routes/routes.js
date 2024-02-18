@@ -26,7 +26,6 @@ router.post('/add', upload, (req, res) => {
         phone: req.body.phone,
         image: req.file.filename
     });
-    console.log(user);
     user.save()
         .then(() => {
 
@@ -34,18 +33,26 @@ router.post('/add', upload, (req, res) => {
                 type: "success",
                 message: "user added successfuly!"
             };
-
+            res.redirect('/');
         })
         .catch((err) => {
             res.json({ message: err.message, type: 'danger' });
+            res.redirect('/');
         })
-    res.redirect('/');
+  
     ;
 })
 
+//get all users route
 router.get("/", (req, res) => {
-    // res.send("Home Page");
-    res.render('index', { title: 'Home Page' })
+    User.find().exec((err, users) => {
+        if(err){
+            res.json({message: err.message});
+        }else{
+            res.render('index', { title: 'Home Page', users:users })
+        }
+    })
+
 });
 
 router.get("/add", (req, res) => {

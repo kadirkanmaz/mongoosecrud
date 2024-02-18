@@ -8,15 +8,8 @@ const PORT = process.env.PORT || 4000;
 
 
 //database connection
-// mongoose.connect(process.env.MONGO_URL,{
-//    useUnifiedTopology: true,
-//   });
-
 mongoose
-  .connect(process.env.MONGODB_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.MONGODB_URL)
   .then(() => {
     console.log("Connected to MongoDB");
   })
@@ -24,9 +17,9 @@ mongoose
     console.log(err);
   });
 
-const db = mongoose.connection;
-db.on('error', (error) => {console.log(error)});
-db.once('open', () => console.log('connected to the database'));
+// const db = mongoose.connection;
+// db.on('error', (error) => {console.log(error)});
+// db.once('open', () => console.log('connected to the database'));
 
 
 //middlewares
@@ -47,6 +40,8 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(express.static('uploads'));
+
 app.set("view engine", "ejs");
 
 // app.get('/', (req, res) => {
@@ -56,6 +51,5 @@ app.set("view engine", "ejs");
 app.use("", require("./routes/routes"));
 
 app.listen(PORT, () => {
-    console.log(process.env.MONGODB_URL);
     console.log(`Server started at http://localhost:${PORT}`);
 })

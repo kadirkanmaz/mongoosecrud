@@ -16,10 +16,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    created:{
+    createdAt :{
         type: Date,
-        required: true,
+        default: Date.now,
     },
 });
 
-module.exports = mongoose.model('user', userSchema);
+module.exports = mongoose.model('User', userSchema);

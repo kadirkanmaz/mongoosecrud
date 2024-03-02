@@ -11,7 +11,33 @@
         order: [0, 'desc']
     });
   });
+  
 </script>
+
+<script>
+  $('input.cbx').on('change', function() {
+    var _isActive = 'Hayır';
+
+    if($(this).prop("checked") ==  true){
+        _isActive = 'Evet';
+      }
+
+      var data = { isActive: _isActive}
+      var id = this.id;
+          
+          $.ajax({
+          method: "put",
+          url: 'setActive/' + id,
+          dataType: 'json',
+          data: data,
+          success: function(data){
+            console.log("Successful!" + data.message);
+            location.href = "/";
+          }
+        });
+  });
+  
+  </script>
 
 </body>
 

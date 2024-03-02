@@ -43,7 +43,8 @@ router.post('/add', upload, (req, res) => {
         name: req.body.name,
         email: req.body.email,
         phone: req.body.phone,
-        image: req.file.filename
+        image: req.file.filename,
+        isActive: 'Hayır'
     });
     user.save()
         .then(() => {
@@ -141,6 +142,28 @@ router.get('/delete/:id', (req, res) => {
             res.redirect('/');
         }
     })
+
+})
+
+router.put('/setActive/:id', (req, res) => {
+    let id = req.params.id;
+    let isActive = req.body.isActive;
+
+    
+    User.findOneAndUpdate({_id: id}, { $set: { "isActive": isActive } }, 
+    function (err, result) {
+        if (err) {
+            res.json({ message:err.message, type: 'danger'});
+            res.send("Error" + err);
+        } else {
+            req.session.message = {
+                type: 'info',
+                message: 'User changed successfully'
+            }
+            data = { message: " başarılı"}
+            res.send(data);
+        }
+    });
 
 })
 

@@ -16,6 +16,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    isActive:{
+        type: String,
+        required: true,
+        default : 'Yes'
+    },
     createdAt :{
         type: Date,
         default: Date.now,
